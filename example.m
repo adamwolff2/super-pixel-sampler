@@ -10,8 +10,7 @@ subplot(2,2,2); imshow(GT_im,[]); title('Ground Truth Depth'); colormap('jet'); 
 
 %% Define hyperparameters
 number_of_SP = 400;
-deg = 0.55; sigma = 1.8; % Bilateral-filter params
-
+deg = 0.55; sigma = 1.8; % Bilateral-filter params - should be manually adjusted and are dependent on amount of samples and depth range
 %% Sampling step
 [samp_inds, SPinds, SPim] = spSampling(RGB_im, number_of_SP);
 [samp_inds_y, samp_inds_x] = ind2sub([M,N], samp_inds);
