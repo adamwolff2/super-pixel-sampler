@@ -1,4 +1,5 @@
 function [sampInds,SPinds,SPim] = spSampling(rgbim,N)
+# Build superpixel (SP) map from the RGB image and take 1 sample for each SP center-of-mass
 
 h = size(rgbim,1);
 w = size(rgbim,2);
