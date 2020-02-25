@@ -1,5 +1,5 @@
-function depth = spReconstruct(depth_mat,samp_inds,SPinds,sigma, deg)
-% Zero order in each SP + Bilateral filter
+function depth = spReconstruct(depth_mat, samp_inds, SPinds, sigma, deg)
+% Zero order reconstruction in each SP + Bilateral filter
 
 [h,w] = size(depth_mat);
 depth = zeros(h,w);
