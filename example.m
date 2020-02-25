@@ -8,9 +8,9 @@ figure; subplot(2,2,1); imshow(RGB_im); title('RGB');
 subplot(2,2,2); imshow(GT_im,[]); title('Ground Truth Depth'); colormap('jet'); colorbar
 [M,N,~] = size(RGB_im);
 
-%% Define Hyperparameters
+%% Define hyperparameters
 number_of_SP = 400;
-Deg = 0.55; Sigma = 1.8; % Bilateral-filter params
+deg = 0.55; sigma = 1.8; % Bilateral-filter params
 
 %% Sampling step
 [samp_inds, SPinds, SPim] = spSampling(RGB_im, number_of_SP);
@@ -20,13 +20,13 @@ title(['Sampling Map: ', num2str(number_of_SP), ' samples'])
 hold on
 plot(samp_inds_x, samp_inds_y, 'r.', 'MarkerSize', 15)
 
-%% Get Samples Depth
+%% Get samples depth
 depth_mat = zeros(M,N);
 depth_mat(samp_inds) = GT_im(samp_inds);
 
 %% Reconstruction step
 sampmap = zeros(M,N);
 sampmap(samp_inds) = 1;
-depthSP = spReconstruct(depth_mat, samp_inds, SPinds, Sigma, Deg);
+depthSP = spReconstruct(depth_mat, samp_inds, SPinds, sigma, deg);
 subplot(2,2,4); 
 imshow(depthSP,[]); title('SP & Bilateral Reconstruction'); colormap('jet'); colorbar
