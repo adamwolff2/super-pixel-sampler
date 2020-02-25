@@ -7,6 +7,6 @@ Requierments:
 
 Usage:
 See example.m for usage example. The code should output the following figure:
-![Image description](link-to-image)
+![Image description](https://github.com/adamwolff2/image-guided-depth-sampling/blob/master/Results.jpg)
 
 Enjoy!
