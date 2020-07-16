@@ -1,13 +1,13 @@
 clc; clear all; close;
 tic
 % general parameters + input paths (KITTI's original files). We'll choose budget of samples from the 'samples_path' images
-budget = 256;   % num of desired samples
+budget = 256;   % num of desired samples # CHANGE #
 is_KITTI = true;
 Kheight = 352; Kwidth = 1216;  % KITTI's crop (most NN do a bottom crop so we don't want samples to be in those areas)
-general_path = 'D:\shacharp\Kitti';
-RGB_path = join([general_path, '\data_rgb\train\']); % \depth_selection\val_selection_cropped\image\
-samples_path = join([general_path, '\data_depth_annotated\train\']); % \depth_selection\val_selection_cropped\groundtruth_depth\
-train_valselect = 'val_select';  % 'train, 'val_select'
+general_path = 'D:\shacharp\Kitti\check'; % # CHANGE #
+RGB_path = join([general_path, '\data_rgb\train\']); % other choise: \depth_selection\val_selection_cropped\image\
+samples_path = join([general_path, '\data_depth_annotated\train\']); % other chose: \depth_selection\val_selection_cropped\groundtruth_depth\
+train_valselect = 'train';  % # CHANGE # 'train, 'val_select'
 
 % output - where the new depth images (the new input) will be saved
 depth_res_path = join([general_path, '\results\', num2str(budget)]);
@@ -71,12 +71,13 @@ for k=1:tot_rgbs
     else
         path_to_images=join([depth_res_path, '\', strjoin(splitted_path_to_images(end-3:end), '\')]);
     end
-    if ~exist(path_to_images, 'dir')
-        mkdir(path_to_images)
+    direct = strsplit(path_to_images, '\');
+    if ~exist(strjoin(direct(1:end-1), '\'), 'dir')
+        mkdir(strjoin(direct(1:end-1), '\'))
     end
     
     % SP sample
-    [~, SampMask, Nsamp] = mask_spSampling(rgb_img, budget,depth_img,fileID);
+    [~, SampMask, Nsamp] = mask_spSampling_sparse(rgb_img, budget,depth_img,fileID);
     sparse = depth_img .* uint16(SampMask);
     pix(k) = Nsamp;  % samples taken per image
     imwrite(sparse, path_to_images)
